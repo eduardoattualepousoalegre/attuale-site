@@ -191,7 +191,7 @@
             const stars = document.querySelectorAll('.star-item');
             const starContainer = document.getElementById('star-rating');
             const googleReviewLink = 'https://g.page/r/CWspXntTk5EaEBM/review';
-            let isClicked = false; // Trava a animação visual após o clique
+            let isClicked = false; 
 
             stars.forEach(star => {
                 // Efeito visual ao passar o mouse
@@ -210,12 +210,12 @@
                     });
                 });
 
-                // Efeito ao clicar (Preenche visualmente E Redireciona na mesma hora)
+                // Efeito ao clicar (Preenche e Redireciona com delay de charme)
                 star.addEventListener('click', function() {
-                    isClicked = true; // Trava as estrelas acesas
+                    isClicked = true; // Trava o estado selecionado
                     const value = parseInt(this.getAttribute('data-value'));
                     
-                    // Preenche as estrelas instantaneamente
+                    // Preenche até a estrela clicada
                     stars.forEach(s => {
                         if (parseInt(s.getAttribute('data-value')) <= value) {
                             s.classList.add('star-active');
@@ -226,11 +226,12 @@
                         }
                     });
 
-                    // Abre o Google em nova aba sem delay para não ser bloqueado por navegadores
-                    window.open(googleReviewLink, '_blank');
-                    
-                    // Destrava a parte visual depois de 1.5s caso a pessoa volte para a página original
-                    setTimeout(() => { isClicked = false; }, 1500); 
+                    // Pequeno delay para o usuário ver a nota antes de abrir o link (350ms)
+                    setTimeout(() => {
+                        window.open(googleReviewLink, '_blank');
+                        // Destrava caso ele volte para a aba
+                        setTimeout(() => { isClicked = false; }, 1000); 
+                    }, 350); 
                 });
             });
 
