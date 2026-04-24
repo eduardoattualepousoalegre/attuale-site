@@ -191,7 +191,7 @@
             const stars = document.querySelectorAll('.star-item');
             const starContainer = document.getElementById('star-rating');
             const googleReviewLink = 'https://g.page/r/CWspXntTk5EaEBM/review';
-            let isClicked = false; // Trava a animação após o clique
+            let isClicked = false; // Trava a animação visual após o clique
 
             stars.forEach(star => {
                 // Efeito visual ao passar o mouse
@@ -210,12 +210,12 @@
                     });
                 });
 
-                // Efeito ao clicar (Preenche e Redireciona)
+                // Efeito ao clicar (Preenche visualmente E Redireciona na mesma hora)
                 star.addEventListener('click', function() {
-                    isClicked = true; // Trava o estado selecionado
+                    isClicked = true; // Trava as estrelas acesas
                     const value = parseInt(this.getAttribute('data-value'));
                     
-                    // Preenche até a estrela clicada
+                    // Preenche as estrelas instantaneamente
                     stars.forEach(s => {
                         if (parseInt(s.getAttribute('data-value')) <= value) {
                             s.classList.add('star-active');
@@ -226,12 +226,11 @@
                         }
                     });
 
-                    // Pequeno delay para o usuário ver a nota antes de abrir o link
-                    setTimeout(() => {
-                        window.open(googleReviewLink, '_blank');
-                        // Destrava caso ele volte para a aba
-                        setTimeout(() => { isClicked = false; }, 1000); 
-                    }, 350); 
+                    // Abre o Google em nova aba sem delay para não ser bloqueado por navegadores
+                    window.open(googleReviewLink, '_blank');
+                    
+                    // Destrava a parte visual depois de 1.5s caso a pessoa volte para a página original
+                    setTimeout(() => { isClicked = false; }, 1500); 
                 });
             });
 
